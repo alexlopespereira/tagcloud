@@ -15,9 +15,11 @@ class EtlTagcloud(EtlBase):
         return None
 
     def load_results(self):
-        for f in glob.glob('/path/**/*.c', recursive=True):
-            print(f)
-        ans = None
+        ans = []
+        for f in glob.glob('../data/**/*.py', recursive=True):
+            with open(f, mode='r') as file:
+                ans.append(file.read())
+
         return ans
 
     def create_query(self, from_date=None, date_field=None):
