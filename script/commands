@@ -1,0 +1,8 @@
+# Remover comentários com #
+find . -type f -name '*.py' -exec sed -i '/^.*[[:blank:]]*#/d;s/#.*//' {} +
+
+# Remover strings entre aspas duplas
+find . -type f -name '*.py' -exec sed -i "s/'[^']*'/NOTFOUND/g" {} +
+
+# Remover strings entre aspas simples
+find . -type f -name '*.py' -exec sed -i 's/"[^"]*"/NOTFOUND/g' {} +
