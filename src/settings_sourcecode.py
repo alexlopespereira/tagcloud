@@ -8,7 +8,7 @@ body_settings_sourcecode = {
                     "ignore_case": True,
                     "stopwords": ["msg", "df", "out", "will", "the", "to", "of", "data", "value", "other", "be", "result", "name", "tm",
                                   "an", "obj", "node", "expected", "this", "that", "it", "res", "cls", "ops", "Returns", "python", "object",
-                                  "key", "index", "are", "param", "by", "evaluate", "dtypes"]
+                                  "key", "default", "index", "are", "param", "by", "evaluate", "dtypes"]
                 },
                 "one_character": {
                     "type": "length",
