@@ -1,6 +1,6 @@
-from etlelk.etlbase import EtlBase
-import pandas as pd
 import datetime
+
+from etlelk.etlbase import EtlBase
 import glob
 
 class EtlTagcloud(EtlBase):
@@ -16,10 +16,20 @@ class EtlTagcloud(EtlBase):
 
     def load_results(self):
         ans = []
-        for f in glob.glob('../data/**/*.py', recursive=True):
-            with open(f, mode='r') as file:
-                ans.append(file.read())
+        size = 15000
+        if self.load_finished:
+            return None
+        hits = self.config.es.search(index='sourcecode__sourcecode', params={"from": self.offset, "size": size},
+                                     filter_path=['hits.hits._id'])['hits']['hits']
+        ids = [x['_id'] for x in hits]
+        vterms = self.config.es.mtermvectors(index="sourcecode__sourcecode", body={"ids": ids})
+        for x in vterms['docs']:
+            if x['term_vectors']:
+                for k, v in x['term_vectors']['filecontent']['terms'].items():
+                    ans.append({"term": k, "frequency": v["term_freq"]})
 
+        self.load_finished = len(hits) < size
+        self.offset += size
         return ans
 
     def create_query(self, from_date=None, date_field=None):

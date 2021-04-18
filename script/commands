@@ -1,8 +1,20 @@
+# Deletar arquivos que não sejam .py
+find . -type f ! -name '*.py' -delete
+
 # Remover comentários com #
 find . -type f -name '*.py' -exec sed -i '/^.*[[:blank:]]*#/d;s/#.*//' {} +
 
-# Remover strings entre aspas duplas
+# Remover strings entre aspas simples
 find . -type f -name '*.py' -exec sed -i "s/'[^']*'/NOTFOUND/g" {} +
 
-# Remover strings entre aspas simples
+# Remover strings entre aspas duplas
 find . -type f -name '*.py' -exec sed -i 's/"[^"]*"/NOTFOUND/g' {} +
+
+find . -type f -name '*.py' -exec sed -i 's/"""[^"]*"""/NOTFOUND/g' {} +
+
+
+find . -type f -name '*.py' -exec sed -i ':a;N;$!ba;s/\n/ /g' {} +
+
+find . -type f -name '*.py' -exec sed -i 's/NOTFOUND/ /g' {} +
+
+find . -type f -name '*.py' -exec sed -i 's/[0-9]/ /g' {} +
