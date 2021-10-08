@@ -22,3 +22,7 @@ find . -type f -name '*.py' -exec sed -i 's/"[^"]*"/NOTFOUND/g' {} +
 find . -type f -name '*.py' -exec sed -i 's/NOTFOUND/ /g' {} +
 
 find . -type f -name '*.py' -exec sed -i 's/[0-9]/ /g' {} +
+
+./pdf2text.sh ../data/storytelling/
+wordcloud_cli --stopwords ./stopwords.txt  --imagefile wordcloud.png --text ./out
+put_ascii.txt
